@@ -74,4 +74,9 @@ config.disksize.size = '100GB'
     config.vm.provision "shell", path: "create-debian-images.sh"
   end
 
+  # add usb filter for sdb board
+  vb.customize ["modifyvm", :id, "--usb", "on"]
+  vb.customize ['usbfilter', 'add', '0', '--target', :id, '--name', 'ESP', '--vendorid', '0x1a86', '--productid', '0x7523']
+
+
 end

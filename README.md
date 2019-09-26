@@ -66,14 +66,34 @@ cd && cd develop && cd linux
 ../repo/repo sync
 ```
 
-## build all images
+## build all images and collect
 
 - hint: this command create buildroot rootfs
 
 ```bash
 cd && cd develop && cd linux
 ./build.sh all
+# collect images
+./mkfirmware.sh buildroot
 ```
+
+## build debian strech destop rootfs
+
+```bash
+cd && cd develop
+git clone https://github.com/rockchip-linux/rk-rootfs-build.git
+cd rk-rootfs-build
+RELEASE=stretch TARGET=desktop ARCH=arm64 ./mk-base-debian.sh
+RELEASE=stretch ARCH=arm64 ./mk-rootfs.sh
+./mk-image.sh
+
+```
+
+
+## modify parameter.txt
+
+- the parameter.txt define the partition size
+echo $(( 0x00200000 * 512 / 1024 / 1024 ))M
 
 ## flash all image to sbc
 
@@ -95,5 +115,14 @@ lsusb
 
 ```bash
 cd && cd develop && cd linux
-./rkflach
+./rkflash
 ```
+
+
+
+sudo apt-get install debootrap
+   29  sudo apt-get install debootstrap
+   30  sudo apt-get install linaro-image-tools
+   31  sudo apt-get install live-build
+   32  sudo apt-get install python-linaro-image-tools
+
