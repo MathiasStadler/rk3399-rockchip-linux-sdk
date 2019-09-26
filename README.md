@@ -16,3 +16,7 @@ missing walkthrough to prepare a debian 10 (buster) image for a [Rockchip RK3399
 
 
 ## install necessary packages for building the project
+
+```bash
+xargs sudo apt-get install < install_packages.lst
+```
