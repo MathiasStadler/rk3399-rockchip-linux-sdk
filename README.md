@@ -25,7 +25,16 @@ vagrant up
 ## update vagrant vm
 
 ```bash
-sudo apt update && sudp apt -y upgrade && sudo apt -y autoremove
+#!/bin/bash
+sudo apt update && sudo apt -y upgrade && sudo apt -y autoremove
+lsb_release -a
+# output 27.09.2019
+# No LSB modules are available
+# Distributor ID:	Ubuntu
+# Description:	Ubuntu 16.04.6 LTS
+# Release:	16.04
+# Codename:	xenial
+
 ```
 
 ## prepare folder
@@ -59,7 +68,7 @@ cd && cd develop && cd linux
 
 ## build all images
 
-- hint: this command build buildroot rootfs
+- hint: this command create buildroot rootfs
 
 ```bash
 cd && cd develop && cd linux
@@ -70,7 +79,7 @@ cd && cd develop && cd linux
 
 - start your sbc in [rkusb mode](http://wiki.t-firefly.com/en/ROC-RK3399-PC/upgrade_firmware_emmc.html)
 
-- revove all cable
+- remove all cable
 - insert usb-c cable from your source computer
 - Press and hold the RECOVERY button
 - power on the sdc
@@ -83,10 +92,6 @@ lsusb
 ```
 
 - HINT: if you not see the usb device inside your vagrant vm check the usb filter settings
-
-
-
-
 
 ```bash
 cd && cd develop && cd linux
