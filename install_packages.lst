@@ -61,3 +61,5 @@ libncurses5-dev
 texinfo
 liblz4-tool
 genext2fs
+htop
+tmux
