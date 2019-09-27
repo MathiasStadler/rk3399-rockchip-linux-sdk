@@ -89,13 +89,12 @@ RELEASE=stretch ARCH=arm64 ./mk-rootfs.sh
 
 ```
 
-
 ## modify parameter.txt
 
 - the parameter.txt define the partition size
 echo $(( 0x00200000 * 512 / 1024 / 1024 ))M
 
-## flash all image to sbc
+## flash all image to sbc rkusb mode
 
 - start your sbc in [rkusb mode](http://wiki.t-firefly.com/en/ROC-RK3399-PC/upgrade_firmware_emmc.html)
 
@@ -104,19 +103,52 @@ echo $(( 0x00200000 * 512 / 1024 / 1024 ))M
 - Press and hold the RECOVERY button
 - power on the sdc
 - after 3 second released the recovery button
-- check is the sbc is connected via usb
+- check is the sbc is connected via usb on host and Vagrant VM
 
 ```bash
 lsusb
-> 
+>Bus 003 Device 004: ID 2207:330c
 ```
 
-- HINT: if you not see the usb device inside your vagrant vm check the usb filter settings
+| HINT: if you **NOT** see the usb device inside your
+| vagrant virtualbox vm but on your host system check
+| the usb filter settings of virtualbox!!
+
+## config udev on host and vagrant vm
+
+```bash
+echo 'SUBSYSTEM=="usb", ATTR{idVendor}=="2207", MODE="0666", GROUP="plugdev"' |sudo tee /etc/udev/rules.d/51-android.roles
+```
+
+- unplug the usb cable and enter in the rkusb mode again for activate the rule
+
+- follow error raise if you have NOT config udev
+
+```txt
+Loading loader...
+Support Type:RK330C     Loader ver:1.19 Loader Time:
+Creating Comm Object failed!
+```
+
+## flash the board
+
+- the image was prepare with command ./mkfirmware.sh buildroot
 
 ```bash
 cd && cd develop && cd linux
-./rkflash
+sudo ./rkflash
 ```
+
+## missing config.ini file
+
+- follow error means
+
+```txt
+flash all images as default
+Not found config.ini
+```
+
+The tool upgrade_tool create a config.ini in ~/.config/upgrade_tool/config.ini and this file is missing or corrupt :-)
 
 
 

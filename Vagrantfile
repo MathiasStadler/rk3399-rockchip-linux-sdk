@@ -58,6 +58,10 @@ config.disksize.size = '100GB'
      vb.cpus = 4
      vb.customize ["modifyvm", :id, "--usb", "on"]
      vb.customize ["modifyvm", :id, "--usbehci", "on"]
+     # add usb filter for sdb board
+     vb.customize ["modifyvm", :id, "--usb", "on"]
+     vb.customize ['usbfilter', 'add', '0', '--target', :id, '--name', 'ESP', '--vendorid', '0x2207', '--productid', '0x330c']
+
    end
   #
   # View the documentation for the provider you are using for more
@@ -73,10 +77,5 @@ config.disksize.size = '100GB'
   Vagrant.configure("2") do |config|
     config.vm.provision "shell", path: "create-debian-images.sh"
   end
-
-  # add usb filter for sdb board
-  vb.customize ["modifyvm", :id, "--usb", "on"]
-  vb.customize ['usbfilter', 'add', '0', '--target', :id, '--name', 'ESP', '--vendorid', '0x1a86', '--productid', '0x7523']
-
 
 end
