@@ -63,7 +63,7 @@ cd linux
 ```bash
 cd && cd develop && cd linux
 ../repo/repo init --repo-url=https://github.com/rockchip-linux/repo -u https://github.com/rockchip-linux/manifests -b master -m rk3399_linux_release.xml
-../repo/repo sync
+../repo/repo sync --current-branch --jobs=8
 ```
 
 ## build all images and collect
