@@ -30,10 +30,10 @@ sudo apt update && sudo apt -y upgrade && sudo apt -y autoremove
 lsb_release -a
 # output 27.09.2019
 # No LSB modules are available
-# Distributor ID:	Ubuntu
-# Description:	Ubuntu 16.04.6 LTS
-# Release:	16.04
-# Codename:	xenial
+# Distributor ID:Ubuntu
+# Description:Ubuntu 16.04.6 LTS
+# Release:16.04
+# Codename:xenial
 
 ```
 
@@ -150,11 +150,38 @@ Not found config.ini
 
 The tool upgrade_tool create a config.ini in ~/.config/upgrade_tool/config.ini and this file is missing or corrupt :-)
 
-
-
 sudo apt-get install debootrap
-   29  sudo apt-get install debootstrap
-   30  sudo apt-get install linaro-image-tools
-   31  sudo apt-get install live-build
-   32  sudo apt-get install python-linaro-image-tools
+sudo apt-get install debootstrap
+sudo apt-get install linaro-image-tools
+sudo apt-get install live-build
+sudo apt-get install python-linaro-image-tools
+
+## temperature zone of rk3399 sapphire
+
+```bash
+# freq and temp
+cat /sys/devices/system/cpu/cpufreq/policy?/cpuinfo_cur_freq /sys/devices/virtual/thermal/thermal_zone?/temp
+```
+
+## sshd Could not load host key: /etc/oad host key: /etc/ssh/ssh_host
+
+reason: ssh host key missing => generate it
+
+```bash
+/usr/bin/ssh-keygen -A
+```
+
+## stress test for sbc
+
+```bash
+sudo apt-get install stress
+# run stress
+stress -c 5 -m 5 -i 5  -t 10
+```
+
+## sources
+
+```txt
+https://forum.frank-mankel.org/topic/292/rockpro64-rp64-gpio/2
+```
 
