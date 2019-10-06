@@ -13,7 +13,7 @@ Vagrant.configure("2") do |config|
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
   config.vm.box = "ubuntu/xenial64"
-config.disksize.size = '100GB'
+  config.disksize.size = '100GB'
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
   # `vagrant box outdated`. This is not recommended.
@@ -74,9 +74,9 @@ config.disksize.size = '100GB'
   #   apt-get update
   #   apt-get install -y apache2
   # SHELL
-  Vagrant.configure("2") do |config|
-    config.vm.provision "file" , source: "./install_packages.list" , destination: "./install_packages.list"
-    config.vm.provision "shell", path: "create-debian-images.sh"
-  end
-
+  # Vagrant.configure("2") do |config|
+   
+  # end
+  config.vm.provision "file" , source: "./install_packages.list" , destination: "./install_packages.list"
+  config.vm.provision "shell", path: "./create-debian-images.sh"
 end

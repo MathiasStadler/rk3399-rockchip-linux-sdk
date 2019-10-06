@@ -1,17 +1,17 @@
 #!/bin/bash
 
 # update system
-sudo apt update && sudo apt -y upgrade && sudo apt -y autoremove
+sudo apt-get update && sudo apt-get -y upgrade && sudo apt-get -y autoremove
 
 # install packages
 xargs sudo apt-get -y install < install_packages.list
 
 # mkdir develop
-cd && mkdir ~/develop
+cd && mkdir -p ~/develop
 
 # check out repo
 cd && cd develop
-git clone https://github.com/rockchip-linux/repo
+git clone --depth 1 https://github.com/rockchip-linux/repo
 
 # mkdir
 mkdir linux && cd $_
