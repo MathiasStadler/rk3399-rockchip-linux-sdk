@@ -75,6 +75,7 @@ config.disksize.size = '100GB'
   #   apt-get install -y apache2
   # SHELL
   Vagrant.configure("2") do |config|
+    config.vm.provision "file" , source: "./install_packages.list" , destination: "./install_packages.list"
     config.vm.provision "shell", path: "create-debian-images.sh"
   end
 
