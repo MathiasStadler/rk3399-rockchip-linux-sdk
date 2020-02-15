@@ -101,7 +101,7 @@ echo $(( 0x00200000 * 512 / 1024 / 1024 ))M
 - remove all cable
 - insert usb-c cable from your source computer
 - Press and hold the RECOVERY button
-- power on the sdc
+- power on the sbc
 - after 3 second released the recovery button
 - check is the sbc is connected via usb on host and Vagrant VM
 
@@ -135,7 +135,7 @@ Creating Comm Object failed!
 
 ```bash
 cd && cd develop && cd linux
-sudo ./rkflash
+sudo ./rkflash.sh
 ```
 
 ## missing config.ini file
@@ -251,14 +251,22 @@ diff -r dir1 dir2 | grep dir1 | awk '{print $4}' > difference1.txt
 cp -vrn linux/kernel/scripts/* linux-mainline-kernel/scripts/
 ```
 
+```bash
 sudo apt-get install lib32z1
+```
+
+
+```bash
+/root/develop/linux/rkbin/tools/upgrade_tool
+```
+rk3399_loader_v1.08.106.bin
 
 ```txt
 1. Force the device into Maskrom Mode.
 2. Run:
-upgrade_tool db           out/u-boot/rk3328_loader_ddr786_v1.06.243.bin
-upgrade_tool wl 0x0       out/system.img
-upgrade_tool rd# reset device to boot
+/root/develop/linux/rkbin/tools/upgrade_tool db           /root/develop/linux/u-boot/rk3399_loader_v1.22.119.bin
+/root/develop/linux/rkbin/tools/upgrade_tool wl 0x0       out/system.img
+/root/develop/linux/rkbin/tools/upgrade_tool rd           # reset device to boot
 ```
 
 ## rkdeveloptool
@@ -268,6 +276,8 @@ upgrade_tool rd# reset device to boot
 - downlaod / install
 
 ```bash
+cd
+cd develop
 git clone https://github.com/rockchip-linux/rkdeveloptool.git
 cd rkdeveloptool/
 autoreconf -i
@@ -278,7 +288,32 @@ rkdeveloptool  -v
 
 ```
 
-## used loader
+## used rkdeveloptool
 
-./rkdeveloptool db /root/develop/linux/u-boot/rk3399_loader_v1.22.119.bin
+rkdeveloptool db /root/develop/linux/u-boot/rk3399_loader_v1.22.119.bin
+# download from Armbian.com
+rkdeveloptool wl 0x0 /vagrant_data/Armbian_5.98_Firefly-rk3399_Debian_buster_dev_5.3.0-rc4.img
+# reset sbc
+rkdeveloptool rd
 
+
+## kitchen sink
+
+```bash
+/root/develop/linux/rkbin/tools/upgrade_tool wl 0x0 /vagrant_data/update.img_save
+```
+
+
+
+
+## uboot for rk3399-evb
+
+```txt
+https://github.com/u-boot/u-boot/tree/master/board/rockchip/evb_rk3399
+```
+
+
+
+setenv fdtfile rockchip/rk3399-sapphire.dtb
+saveenv
+run bootcmd_mmc0
