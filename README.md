@@ -121,7 +121,6 @@ echo 'SUBSYSTEM=="usb", ATTR{idVendor}=="2207", MODE="0666", GROUP="plugdev"' |s
 ```
 
 - unplug the usb cable and enter in the rkusb mode again for activate the rule
-
 - follow error raise if you have NOT config udev
 
 ```txt
@@ -184,4 +183,102 @@ stress -c 5 -m 5 -i 5  -t 10
 ```txt
 https://forum.frank-mankel.org/topic/292/rockpro64-rp64-gpio/2
 ```
+
+## build boot image
+
+- from here https://wiki.radxa.com/Rock/Booting_Linux
+
+git clone https://github.com/neo-technologies/rockchip-mkbootimg.git
+   cd rockchip-mkbootimg
+   make
+   sudo make install
+   cd ..
+
+## pack/unpack resources.img
+
+http://rockchip.wikidot.com/create-image
+
+http://lexra.pixnet.net/blog/post/345687467
+
+```bash
+git clone --depth 1  https://github.com/linux-rockchip/u-boot-rockchip.git
+# enter folder
+cd tools/resource
+# comment CFLAGS
+sed -i '/CFLAGS/s/^/#/g' Makefile
+# compile tool
+make
+# unpack img default to ./out
+./resource_tool --verbose --unpack --image=/root/develop/linux/kernel/resource.img
+# list files
+ls -l ./out
+```
+
+```txt
+processing option: updateimg
+Make update.img
+start to make update.img...
+Android Firmware Package Tool v1.62
+------ PACKAGE ------
+Add file: ./package-file
+Add file: ./Image/MiniLoaderAll.bin
+Add file: ./Image/parameter.txt
+Add file: ./Image/trust.img
+Add file: ./Image/uboot.img
+Add file: ./Image/misc.img
+Add file: ./Image/boot.img
+Add file: ./Image/recovery.img
+Add file: ./Image/rootfs.img
+Add file: ./Image/oem.img
+Add file: ./Image/userdata.img
+Add CRC...
+```
+
+http://www.shincbm.com/linux/rk3399/arm64/2019/01/25/rk3399-linux-compile-native.html
+
+## Find the files existing in one directory but not in the other
+
+```bash
+diff -r dir1 dir2 | grep dir1 | awk '{print $4}' > difference1.txt
+
+ diff -r linux/kernel/scripts/ linux-mainline-kernel/scripts/ |grep linux/kernel/scripts/ | awk  '{print $4}'
+
+```
+
+## copy files but not overwrite
+
+```bash
+cp -vrn linux/kernel/scripts/* linux-mainline-kernel/scripts/
+```
+
+sudo apt-get install lib32z1
+
+```txt
+1. Force the device into Maskrom Mode.
+2. Run:
+upgrade_tool db           out/u-boot/rk3328_loader_ddr786_v1.06.243.bin
+upgrade_tool wl 0x0       out/system.img
+upgrade_tool rd# reset device to boot
+```
+
+## rkdeveloptool
+
+- upload / download bin and images to sbc
+
+- downlaod / install
+
+```bash
+git clone https://github.com/rockchip-linux/rkdeveloptool.git
+cd rkdeveloptool/
+autoreconf -i
+./configure
+make
+make install
+rkdeveloptool  -v
+
+```
+
+## used loader
+
+./rkdeveloptool db /root/develop/linux/u-boot/rk3399_loader_v1.22.119.bin
 

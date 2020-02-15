@@ -1,8 +1,15 @@
 {
     "cSpell.words": [
+        "CFLAGS",
         "Rockchip",
+        "Vagrantfile",
+        "buildroot",
+        "mkbootimg",
+        "mkdir",
+        "mkfirmware",
         "plugdev",
         "rkusb",
+        "rootfs",
         "udev",
         "virtualbox",
         "walkthrough"

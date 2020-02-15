@@ -49,3 +49,23 @@ echo "you can flash the image to sbc with the command"
 echo "sudo ~/develop/linux/rkflash.sh update ~/develop/linux/rockdev/update.img"
 
 
+# build debian rootfs
+
+cd ~/develop/linux/rootfs
+
+# install packages
+sudo apt-get install binfmt-support qemu-user-static
+sudo dpkg -i ubuntu-build-service/packages/*
+sudo apt-get install -y -f
+
+# make base debian image
+RELEASE=stretch TARGET=desktop ARCH=arm64 ./mk-base-debian.sh
+
+
+# Building the rk-debian rootfs:
+RELEASE=stretch ARCH=arm64 ./mk-rootfs.sh
+
+# Creating the ext4 image(linaro-rootfs.img):
+./mk-image.sh
+
+
